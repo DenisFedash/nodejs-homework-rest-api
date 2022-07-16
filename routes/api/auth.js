@@ -11,6 +11,14 @@ router.post(
   ctrlWrapper(ctrl.signup),
 )
 
+router.get('/users/verify/:verificationToken', ctrlWrapper(ctrl.verifyEmail))
+
+router.post(
+  '/users/verify',
+  validation(schemas.email),
+  ctrlWrapper(ctrl.resendVerifyEmail),
+)
+
 router.post('/users/login', validation(schemas.signup), ctrlWrapper(ctrl.login))
 
 router.get('/users/current', authenticate, ctrlWrapper(ctrl.getCurrent))
