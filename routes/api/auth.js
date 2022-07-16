@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const { ctrlWrapper } = require('../../helpers')
 const ctrl = require('../../controllers/auth')
-const { validation, authenticate } = require('../../middlewares')
+const { validation, authenticate, upload } = require('../../middlewares')
 const { schemas } = require('../../models/user')
 
 router.post(
@@ -21,6 +21,13 @@ router.patch(
   '/users/subscriprion',
   authenticate,
   ctrlWrapper(ctrl.updSubscription),
+)
+
+router.patch(
+  '/users/avatars',
+  authenticate,
+  upload.single('avatar'),
+  ctrlWrapper(ctrl.updAvatar),
 )
 
 module.exports = router
